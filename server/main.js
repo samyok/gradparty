@@ -45,9 +45,12 @@ app.post('/submit', (req, res) => {
     ]
     for (let i = 0; i < fieldNames.length; i++) {
         let name = fieldNames[i];
-        if (!req.body[name]) return res.json({success: false, error: `Please fill in the required ${name} field`})
+        if (!req.body[name]) {
+            console.log(dayjs().format(), `unsuccessful ${name}`, req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress);
+            return res.json({success: false, error: `Please fill in the required ${name} field`})
+        }
     }
-    console.log(req.body);
+    console.log(dayjs().format(), req.body, req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress);
     db.set(nanoid(10), {...req.body, ip: req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress});
     res.json({success: true});
 
