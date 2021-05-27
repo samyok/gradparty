@@ -30,7 +30,7 @@ app.get('/data', (req, res) => {
         name: key,
         listings: days[key].sort((a, b) => a.unixStartTime > b.unixStartTime ? 1 : -1)
     }));
-    console.log('data requested; ', req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress);
+    console.log(dayjs().format(), 'data requested', req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress);
     res.json(result);
 });
 
