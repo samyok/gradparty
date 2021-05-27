@@ -25,11 +25,12 @@ app.get('/data', (req, res) => {
         if (!days[dayName]) days[dayName] = [];
         days[dayName].push({...party, unixStartTime, timeString})
     });
-    console.log(days);
+    // console.log(days);
     let result = Object.keys(days).sort((a, b) => +dayjs(a) < +dayjs(b) ? -1 : 1).map(key => ({
         name: key,
         listings: days[key].sort((a, b) => a.unixStartTime > b.unixStartTime ? 1 : -1)
     }));
+    console.log('data requested; ', req.headers['cf-connecting-ip'] || req.headers['x-forwarded-for'] || req.connection.remoteAddress);
     res.json(result);
 });
 
