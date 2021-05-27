@@ -202,11 +202,11 @@ function AddEventForm() {
             <input type="text" id="address" placeholder="1600 Pennsylvania Avenue, Washington, D.C."/>
         </label>
 
-        <label htmlFor="upload">
-            Upload Image
-            <input type="file" id="upload"/>
-        </label>
-        <p>Note: Images will be warped to fit to a square if they are not already one!</p>
+        {/*<label htmlFor="upload">*/}
+        {/*    Upload Image*/}
+        {/*    <input type="file" id="upload"/>*/}
+        {/*</label>*/}
+        {/*<p>Note: Images will be warped to fit to a square if they are not already one!</p>*/}
         <label htmlFor="phonenumber">
             Submitter's Contact Phone Number *
             <input type="tel" id="phonenumber"/>
