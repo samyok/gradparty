@@ -117,7 +117,7 @@ function CalendarEvent({listing, colorIndex}) {
 function AddEventForm() {
     const [desc, setDesc] = useState("");
     const submitForm = useCallback(() => {
-        let file = document.querySelector("#upload").files[0];
+        let file = document.querySelector("#upload")?.files[0];
         if (!file) {
             if (window.confirm("Are you sure you don't want to submit an image?"))
                 return submitForm(null);
