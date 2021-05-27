@@ -1,7 +1,9 @@
 import './App.sass';
 import {useCallback, useEffect, useState} from "react";
 import * as Compress from 'compress.js';
+import {Alert, Confirm} from "./Alerts";
 const compress = new Compress();
+
 const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) ||
     (navigator.platform === 'MacIntel')
 const mapURL = isIOS ? "https://maps.apple.com/?q=" : "https://www.google.com/maps?q=";
@@ -117,13 +119,16 @@ function CalendarEvent({listing, colorIndex}) {
 function AddEventForm() {
     const [desc, setDesc] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const submitForm = useCallback(() => {
+    const submitForm = useCallback(async () => {
         setIsLoading(true);
         let file = document.querySelector("#upload")?.files[0];
         if (!file) {
-            if (window.confirm("Are you sure you don't want to submit an image?"))
+            if (await Confirm("Are you sure you don't want to submit an image?"))
                 return submitForm(null);
-            else return;
+            else {
+                setIsLoading(false);
+                return;
+            };
         }
 
         compress.compress([file], {
@@ -159,13 +164,13 @@ function AddEventForm() {
                 })
             })
                 .then(r => r.json())
-                .then(r => {
+                .then(async r => {
                     setIsLoading(false);
                     if (r.success) {
-                        alert("Added event successfully!");
+                        await Alert("Added event successfully!");
                         window.location.href = "/"
                     } else {
-                        alert(r.error);
+                        await Alert(r.error);
                     }
                 })
 
@@ -209,7 +214,6 @@ function AddEventForm() {
             Upload Image
             <input type="file" id="upload"/>
         </label>
-        <p>Note: Images will be warped to fit to a square if they are not already one!</p>
         <label htmlFor="phonenumber">
             Submitter's Contact Phone Number *
             <input type="tel" id="phonenumber"/>
