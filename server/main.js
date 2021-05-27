@@ -41,7 +41,6 @@ app.post('/submit', (req, res) => {
         "endTime",
         "address",
         "phoneNumber",
-        "image",
     ]
     for (let i = 0; i < fieldNames.length; i++) {
         let name = fieldNames[i];
