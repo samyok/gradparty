@@ -116,7 +116,9 @@ function CalendarEvent({listing, colorIndex}) {
 
 function AddEventForm() {
     const [desc, setDesc] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const submitForm = useCallback(() => {
+        setIsLoading(true);
         let file = document.querySelector("#upload")?.files[0];
         if (!file) {
             if (window.confirm("Are you sure you don't want to submit an image?"))
@@ -158,6 +160,7 @@ function AddEventForm() {
             })
                 .then(r => r.json())
                 .then(r => {
+                    setIsLoading(false);
                     if (r.success) {
                         alert("Added event successfully!");
                         window.location.href = "/"
@@ -202,11 +205,11 @@ function AddEventForm() {
             <input type="text" id="address" placeholder="1600 Pennsylvania Avenue, Washington, D.C."/>
         </label>
 
-        {/*<label htmlFor="upload">*/}
-        {/*    Upload Image*/}
-        {/*    <input type="file" id="upload"/>*/}
-        {/*</label>*/}
-        {/*<p>Note: Images will be warped to fit to a square if they are not already one!</p>*/}
+        <label htmlFor="upload">
+            Upload Image
+            <input type="file" id="upload"/>
+        </label>
+        <p>Note: Images will be warped to fit to a square if they are not already one!</p>
         <label htmlFor="phonenumber">
             Submitter's Contact Phone Number *
             <input type="tel" id="phonenumber"/>
@@ -214,7 +217,7 @@ function AddEventForm() {
 
 
 
-        <button onClick={submitForm}>Post</button>
+        <button onClick={submitForm} disabled={isLoading}>{isLoading ? "Loading..." : 'Post'}</button>
     </div>
 }
 
