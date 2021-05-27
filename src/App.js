@@ -63,7 +63,7 @@ function Main() {
     return (
         <div className="container">
             <h1>'21 Grad Parties</h1>
-            <p>Add your graduation party to this list by clicking <a href="/add">here</a>! 🎓🎉</p>
+            <p>Add your graduation party to this list by clicking <a target="_blank" href="/add">here</a>! 🎓🎉</p>
             <p>Everyone's invited to the following open houses! Text me (605-592-6144) if anything needs changing.</p>
             <br/>
             <br/>
@@ -119,6 +119,11 @@ function CalendarEvent({listing, colorIndex}) {
 function AddEventForm() {
     const [desc, setDesc] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    useEffect(() => {
+        if(navigator.userAgent.toLowerCase().includes('snapchat')) {
+            Alert("This form doesn't work inside of Snapchat 😭 Click the three dots in the top right and open this website in browser.", "Snapchat detected!")
+        }
+    }, [])
     const submitForm = useCallback(async () => {
         setIsLoading(true);
         let file = document.querySelector("#upload")?.files[0];
